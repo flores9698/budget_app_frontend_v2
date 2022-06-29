@@ -38,7 +38,7 @@ const AccountTable = () => {
     }, []);
 
     return (
-        <Box mb={2}>
+        <Box mt={2}>
 
             <Typography variant="h4">
                 Account's Summary

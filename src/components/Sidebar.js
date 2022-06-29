@@ -15,10 +15,11 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import AccountBalanceSharpIcon from '@mui/icons-material/AccountBalanceSharp';
 import {Cookies} from "react-cookie";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useEffect} from "react";
 import axios from "axios";
 import {TableBody, TableCell, TableHead, TableRow, Table, TableContainer, Button} from "@mui/material";
+import {Routes, Route, Outlet} from "react-router-dom";
 import AddAccountDialog from "./dialogs/AddAccountDialog";
 import ExpensesDashboard from "./ExpensesDashboard";
 import AccountTable from "./AccountTable";
@@ -62,18 +63,29 @@ export default function Sidebar() {
         <Box sx={{display: 'flex'}}>
             <CssBaseline/>
             <AppBar
-                position="fixed"
-                sx={{width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px`}}
+                // position="fixed"
+                sx={{width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px`,}}
             >
                 <Toolbar>
-                    <Typography variant="h6" noWrap component="div">
-                        My Budget App
-                    </Typography>
+
+                    <ListItemButton onClick={() => {
+                        console.log("logout");
+                        cookies.remove("token");
+                        cookies.remove("userid");
+                        navigate("/login");
+
+
+                    }}>
+                        <ListItemText primary={"Logout"}/>
+
+                    </ListItemButton>
                 </Toolbar>
+
             </AppBar>
             <Drawer
                 sx={{
                     width: drawerWidth,
+                    color: '#1b77d2',
                     flexShrink: 0,
                     '& .MuiDrawer-paper': {
                         width: drawerWidth,
@@ -83,49 +95,50 @@ export default function Sidebar() {
                 variant="permanent"
                 anchor="left"
             >
-                <Toolbar/>
+                <Toolbar sx={{
+                    backgroundColor: '#1b77d2',
+                    color: '#fff',
+                }}>
+                    <Typography variant="h6">
+                        My Budget App
+                    </Typography>
+                </Toolbar>
                 <Divider/>
-                <List>
+                <List mt={3}>
                     {
-                        bankAccounts.map((bankAccount) => (
-                            <ListItem key={bankAccount.account_id} disablePadding>
+                        ['Expenses', 'Accounts'].map((element) => (
+                            <ListItem key={element} disablePadding>
                                 <AccountBalanceSharpIcon/>
-                                <ListItemButton>
-                                    <ListItemText primary={bankAccount.account_name}/>
+                                <ListItemButton sx={{
+                                    textDecoration: 'none',
+                                }} >
+                                    <Link to={`${element.toLowerCase()}`} >
+                                        <ListItemText primary={element}/>
+                                    </Link>
                                 </ListItemButton>
                             </ListItem>
 
                         ))}
                     <Divider/>
                 </List>
-                <ListItemButton onClick={() => {
-                    console.log("logout");
-                    cookies.remove("token");
-                    cookies.remove("userid");
-                    navigate("/login");
 
-
-                }}>
-                    <ListItemText primary={"Logout"}/>
-
-                </ListItemButton>
-                <Divider/>
             </Drawer>
             <Box
                 component="main"
                 sx={{flexGrow: 1, bgcolor: 'background.default ', p: 3}}
             >
-                <Toolbar/>
 
 
-                <Box mt={8}>
-                    <AccountTable/>
-                </Box>
+                {/*<Box mt={8}>*/}
+                {/*    <AccountTable/>*/}
+                {/*</Box>*/}
 
-                <Box mt={10}>
-                    <ExpensesDashboard/>
+                {/*<Box mt={10}>*/}
+                {/*    <ExpensesDashboard/>*/}
 
-                </Box>
+                {/*</Box>*/}
+                <Outlet/>
+
             </Box>
         </Box>
     );
