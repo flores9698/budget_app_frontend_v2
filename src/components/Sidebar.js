@@ -69,7 +69,11 @@ export default function Sidebar() {
         // position="fixed"
         sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
       >
-        <Toolbar>
+        <Toolbar
+        sx={{
+          marginLeft: "auto",
+        }}
+        >
           <ListItemButton
             onClick={() => {
               console.log("logout");
