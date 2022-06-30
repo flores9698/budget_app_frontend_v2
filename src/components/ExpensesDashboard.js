@@ -11,6 +11,8 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import AddCategoryDialog from "./dialogs/AddCategoryDialog";
 import AddExpenseDialog from "./dialogs/AddExpenseDialog";
 // import {Table} from 'react-bootstrap';
@@ -135,6 +137,9 @@ export default function ExpensesDashboard() {
               <TableCell onClick={() => sorting("category_name")}>
                 Category
               </TableCell>
+              <TableCell align="center" onClick={() => sorting("income")}>
+                Expense/Income
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -142,8 +147,16 @@ export default function ExpensesDashboard() {
               <TableRow key={expense.id + expense.expense_name}>
                 <TableCell>{expense.expense_name}</TableCell>
                 <TableCell>{expense.date_added.split("T")[0]}</TableCell>
-                <TableCell>{expense.amount}</TableCell>
+                <TableCell>
+                  {
+                    // add - if expense
+                    expense.income ? expense.amount : expense.amount * -1
+                  }
+                </TableCell>
                 <TableCell>{expense.category_name}</TableCell>
+                <TableCell align="center">
+                  {expense.income ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
