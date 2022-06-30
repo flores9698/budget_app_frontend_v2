@@ -4,6 +4,8 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
 import Form from "react-bootstrap/Form";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 import axios from "axios";
 import { Cookies } from "react-cookie";
 import { Formik } from "formik";
@@ -29,7 +31,14 @@ export default function AddExpenseDialog() {
   const [bankName, setBankName] = React.useState("");
   const [banks, setBanks] = React.useState([]);
   const [categories, setCategories] = React.useState([]);
+  const [isIncome, setIsIncome] = React.useState(false);
+
   const errors = {};
+
+  const isIncomeChange = (event) => {
+    setIsIncome(!isIncome);
+  }
+
 
   const getBanks = async () => {
     const response = await fetch(`${baseUrl}/banks`, {
@@ -74,6 +83,7 @@ export default function AddExpenseDialog() {
           category_id: category,
           amount: amount,
           bank_account_id: bankName,
+          income: isIncome,
         },
         {
           headers: {
@@ -97,6 +107,7 @@ export default function AddExpenseDialog() {
     console.log("amount", amount);
     console.log("bankName", bankName);
     console.log("userId", userId);
+    console.log("Is Income", isIncome);
   };
   useEffect(() => {
     getBanks();
@@ -210,6 +221,18 @@ export default function AddExpenseDialog() {
               placeholder="Enter Expense Amount"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={isIncome}
+                  onChange={isIncomeChange}
+                  inputProps={{ "aria-label": "controlled" }}
+                />
+              }
+              label="Income"
             />
           </Form.Group>
           <AddCategoryDialog />
