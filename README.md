@@ -2,6 +2,15 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+# Deplyment 
+## Apply manifest
+kubectl apply -f deployment.yaml
+
+## create service
+kubectl expose deployment frontend --type=LoadBalancer --port=3000
+or 
+kubectl apply -f service.yaml
+
 ## Available Scripts
 
 In the project directory, you can run:
