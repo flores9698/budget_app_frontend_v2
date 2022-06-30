@@ -24,7 +24,7 @@ function Register() {
       <Formik
         initialValues={{ email: "", password: "" }}
         onSubmit={(values) => {
-          console.log(values);
+          //console.log(values);
           axios
             .post(`${baseUrl}/users/login`, {
               email: values.email,
@@ -34,8 +34,8 @@ function Register() {
               // setUserInfo(res);
               setLoggedIn(true);
               userInfo = res.data.body.user;
-              console.log(userInfo);
-              console.log(res.data.body.user.token);
+              //console.log(userInfo);
+              //console.log(res.data.body.user.token);
               const cookies = new Cookies();
               cookies.set("token", res.data.body.user.token, cookiesOptions);
               cookies.set("userid", res.data.body.user.id, cookiesOptions);
@@ -43,13 +43,13 @@ function Register() {
 
               //wait 2 seconds to redirect
               setTimeout(() => {
-                console.log(userInfo);
+                //console.log(userInfo);
                 navigate("/welcome");
               }, 2000);
             })
 
             .catch((err) => {
-              console.log(err);
+              //console.log(err);
               setError(err.response.data.error);
             });
         }}
