@@ -43,6 +43,7 @@ export default function Sidebar() {
 
   const authToken = cookies.get("token");
   const userId = cookies.get("userid");
+  const userFirstName = cookies.get("userFirstName");
 
   const getBankAccounts = async () => {
     const response = await fetch(`${baseUrl}/bank_accounts/${userId}`, {
@@ -70,10 +71,10 @@ export default function Sidebar() {
         sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
       >
         <Toolbar
-        sx={{
-          marginLeft: "auto",
-        }}
-        >    
+          sx={{
+            marginLeft: "auto",
+          }}
+        >
           <ListItemButton
             onClick={() => {
               console.log("logout");
@@ -110,15 +111,14 @@ export default function Sidebar() {
         <Divider />
         <List mt={3}>
           {["Expenses", "Accounts"].map((element) => (
-            <ListItem key={element} >
+            <ListItem key={element}>
               <AccountBalanceSharpIcon />
               <ListItemButton>
-                <Link to={`${element.toLowerCase()}`} 
-                // dont show underline
-                style={{ textDecoration: "none" ,
-                color: "black"}}>
-                  
-                
+                <Link
+                  to={`${element.toLowerCase()}`}
+                  // dont show underline
+                  style={{ textDecoration: "none", color: "black" }}
+                >
                   <ListItemText primary={element} />
                 </Link>
               </ListItemButton>
@@ -131,14 +131,7 @@ export default function Sidebar() {
         component="main"
         sx={{ flexGrow: 1, bgcolor: "background.default ", p: 3 }}
       >
-        {/*<Box mt={8}>*/}
-        {/*    <AccountTable/>*/}
-        {/*</Box>*/}
-
-        {/*<Box mt={10}>*/}
-        {/*    <ExpensesDashboard/>*/}
-
-        {/*</Box>*/}
+        <Box mt={8}>Welcome {userFirstName}</Box>
         <Outlet />
       </Box>
     </Box>

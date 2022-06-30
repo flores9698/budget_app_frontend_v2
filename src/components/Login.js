@@ -37,8 +37,9 @@ function Register() {
               console.log(userInfo);
               console.log(res.data.body.user.token);
               const cookies = new Cookies();
-              cookies.set("token", res.data.body.user.token);
+              cookies.set("token", res.data.body.user.token, cookiesOptions);
               cookies.set("userid", res.data.body.user.id, cookiesOptions);
+              cookies.set("userFirstName", res.data.body.user.name, cookiesOptions);
 
               //wait 2 seconds to redirect
               setTimeout(() => {
