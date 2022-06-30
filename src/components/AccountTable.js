@@ -18,7 +18,7 @@ const cookies = new Cookies();
 const cookiesOptions = { expires: new Date(Date.now() + 3600 * 1000) };
 const authToken = cookies.get("token");
 const userId = cookies.get("userid");
-const baseUrl = "http://34.67.5.157:8500";
+const baseUrl = "http://34.71.211.145:8500";
 
 const AccountTable = () => {
   const [bankAccounts, setBankAccounts] = React.useState([]);

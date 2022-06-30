@@ -16,7 +16,7 @@ import { MenuItem } from "@mui/material";
 import Box from "@mui/material/Box";
 import AddCategoryDialog from "./AddCategoryDialog";
 
-const baseUrl = "http://34.67.5.157:8500";
+const baseUrl = "http://34.71.211.145:8500";
 const cookies = new Cookies();
 
 const userId = cookies.get("userid");
@@ -37,8 +37,7 @@ export default function AddExpenseDialog() {
 
   const isIncomeChange = (event) => {
     setIsIncome(!isIncome);
-  }
-
+  };
 
   const getBanks = async () => {
     const response = await fetch(`${baseUrl}/banks`, {
