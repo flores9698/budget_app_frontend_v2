@@ -13,7 +13,7 @@ import Select from "@mui/material/Select";
 import { MenuItem } from "@mui/material";
 import Box from "@mui/material/Box";
 
-const baseUrl = "http://34.67.5.157:8500";
+const baseUrl = "http://34.71.211.145:8500";
 const cookies = new Cookies();
 
 const userId = cookies.get("userid");

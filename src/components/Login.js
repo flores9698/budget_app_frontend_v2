@@ -7,7 +7,7 @@ import axios from "axios";
 import { Cookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 
-const baseUrl = "http://34.67.5.157:8500";
+const baseUrl = "http://34.71.211.145:8500";
 
 function Register() {
   const [username, setUsername] = React.useState("toby9698@gmail.com");

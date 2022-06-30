@@ -20,7 +20,7 @@ const cookies = new Cookies();
 const cookiesOptions = { expires: new Date(Date.now() + 3600 * 1000) };
 const userId = cookies.get("userid");
 const token = cookies.get("token");
-const baseUrl = "http://34.67.5.157:8500";
+const baseUrl = "http://34.71.211.145:8500";
 
 export default function ExpensesDashboard() {
   const [categories, setCategories] = React.useState([]);

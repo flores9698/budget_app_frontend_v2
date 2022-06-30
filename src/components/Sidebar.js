@@ -35,7 +35,7 @@ import AccountTable from "./AccountTable";
 const drawerWidth = 240;
 const cookies = new Cookies();
 const cookiesOptions = { expires: new Date(Date.now() + 3600 * 1000) };
-const baseUrl = "http://34.67.5.157:8500";
+const baseUrl = "http://34.71.211.145:8500";
 
 export default function Sidebar() {
   const [userInfo, setUserInfo] = React.useState({});
