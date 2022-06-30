@@ -73,7 +73,7 @@ export default function Sidebar() {
         sx={{
           marginLeft: "auto",
         }}
-        >
+        >    
           <ListItemButton
             onClick={() => {
               console.log("logout");
@@ -110,20 +110,21 @@ export default function Sidebar() {
         <Divider />
         <List mt={3}>
           {["Expenses", "Accounts"].map((element) => (
-            <ListItem key={element} disablePadding>
+            <ListItem key={element} >
               <AccountBalanceSharpIcon />
-              <ListItemButton
-                sx={{
-                  textDecoration: "none",
-                }}
-              >
-                <Link to={`${element.toLowerCase()}`}>
+              <ListItemButton>
+                <Link to={`${element.toLowerCase()}`} 
+                // dont show underline
+                style={{ textDecoration: "none" ,
+                color: "black"}}>
+                  
+                
                   <ListItemText primary={element} />
                 </Link>
               </ListItemButton>
             </ListItem>
           ))}
-          <Divider />
+          {/* <Divider /> */}
         </List>
       </Drawer>
       <Box
