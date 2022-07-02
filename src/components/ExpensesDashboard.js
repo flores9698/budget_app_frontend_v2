@@ -4,17 +4,11 @@ import Divider from "@mui/material/Divider";
 import { Cookies } from "react-cookie";
 import { useEffect } from "react";
 import axios from "axios";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-} from "@mui/material";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import AddCategoryDialog from "./dialogs/AddCategoryDialog";
 import AddExpenseDialog from "./dialogs/AddExpenseDialog";
+import Table from './Table';
 // import {Table} from 'react-bootstrap';
 const cookies = new Cookies();
 const cookiesOptions = { expires: new Date(Date.now() + 3600 * 1000) };
@@ -60,25 +54,62 @@ export default function ExpensesDashboard() {
         Authorization: `Bearer ${token}`,
       },
     });
-    setExpenses((await response).data.body.expenses);
+    let data = await response.data.body.expenses;
+    // remove T from date_added
+    data.forEach((expense) => {
+      expense.date_added = expense.date_added.split("T")[0];
+    });
+    data.forEach((expense) => {
+      expense.is_expense = expense.is_expense ? <ArrowDownwardIcon /> : <ArrowUpwardIcon />;
+    });
+
+    setExpenses(data);
   };
+
+  const getBankAccounts = async () => {
+    const response = await axios.get(`${baseUrl}/bank_accounts/${userId}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = response.data;
+    console.log("bank accounts", data);
+  }
+
+  useEffect(() => {
+    getBankAccounts();
+  }, []);
+    
+
+
+
   useEffect(() => {
     getExpenses();
     console.log("Expenses", expenses);
   }, []);
-  //sort expenses by column
-  const sortExpenses = (column) => {
-    const sortedExpenses = expenses.sort((a, b) => {
-      if (a[column] < b[column]) {
-        return -1;
-      }
-      if (a[column] > b[column]) {
-        return 1;
-      }
-      return 0;
-    });
-    setExpenses(sortedExpenses);
-  };
+
+
+
+  const columns = [{
+    Header: "Description",
+    accessor: "expense_name",
+  }, {
+    Header: "Category",
+    accessor: "category_name",
+  }, {
+    Header: "Amount",
+    accessor: "amount",
+  }, {
+    Header: "Date",
+    accessor: "date_added",
+  },
+  { Header: "Expense/Income",
+    accessor: "is_expense", 
+  }];
+
+
+
 
   return (
     <div className={"container bg-gradient my-5"}>
@@ -126,7 +157,7 @@ export default function ExpensesDashboard() {
         {/*        ))}*/}
         {/*    </TableBody>*/}
         {/*</Table>*/}
-        <Table className={"table table-striped "}>
+        {/* <Table className={"table table-striped "}>
           <TableHead>
             <TableRow>
               <TableCell hover onClick={() => sorting("expense_name")}>
@@ -160,7 +191,14 @@ export default function ExpensesDashboard() {
               </TableRow>
             ))}
           </TableBody>
-        </Table>
+        </Table> */}
+
+        
+        
+        <Table data={expenses} columns={columns}  />
+        
+
+
         <AddCategoryDialog />
         <AddExpenseDialog />
       </div>
