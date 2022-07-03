@@ -9,6 +9,7 @@ import Welcome from "./components/Welcome";
 import PrivateRoutes from "./components/PrivateRoutes";
 import ExpensesDashboard from "./components/ExpensesDashboard";
 import AccountTable from "./components/AccountTable";
+import Transfer from "./components/Transfer";
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                         <Route path="/welcome/" element={<Welcome />} >
                             <Route path="expenses" element={<ExpensesDashboard/>} />
                             <Route path="accounts" element={<AccountTable/>} />
+                            <Route path="transfer" element={<Transfer/>} />
                         </Route>
 
                     </Route>

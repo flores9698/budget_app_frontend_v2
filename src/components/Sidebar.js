@@ -110,7 +110,7 @@ export default function Sidebar() {
         </Toolbar>
         <Divider />
         <List mt={3}>
-          {["Expenses", "Accounts"].map((element) => (
+          {["Expenses", "Accounts","Transfer"].map((element) => (
             <ListItem key={element}>
               <AccountBalanceSharpIcon />
               <ListItemButton>
