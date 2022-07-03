@@ -35,12 +35,15 @@ export default function AddExpenseDialog() {
 
   const errors = {};
 
-  const isIncomeChange = (event) => {
-    setIsIncome(!isIncome);
+  const isIncomeChange = (e) => {
+    setIsIncome(
+      e.target.checked ? true : false
+    );
+    console.log(isIncome.toString());
   };
 
   const getBanks = async () => {
-    const response = await fetch(`${baseUrl}/banks`, {
+    const response = await fetch(`${baseUrl}/bank_accounts/${userId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -49,7 +52,7 @@ export default function AddExpenseDialog() {
     });
     const data = await response.json();
     console.log(data.body);
-    setBanks(data.body.bank_accounts);
+    setBanks(data.body.user);
   };
   const getCategories = async () => {
     const response = await fetch(`${baseUrl}/categories/${userId}`, {
@@ -82,7 +85,7 @@ export default function AddExpenseDialog() {
           category_id: category,
           amount: amount,
           bank_account_id: bankName,
-          income: isIncome,
+          income: isIncome.toString(),
         },
         {
           headers: {
@@ -106,11 +109,11 @@ export default function AddExpenseDialog() {
     console.log("amount", amount);
     console.log("bankName", bankName);
     console.log("userId", userId);
-    console.log("Is Income", isIncome);
+    console.log("Is Income", isIncome.toString());
   };
   useEffect(() => {
     getBanks();
-    console.log("banks", banks);
+    console.log("-------Banks", banks);
     // getCategories();
     // console.log("categories", categories);
   }, []);
@@ -152,11 +155,11 @@ export default function AddExpenseDialog() {
           </Form.Group>
 
           <Form.Group className={"form-group"}>
-            <FormLabel htmlFor="bankName">Bank Name</FormLabel>
+            <FormLabel htmlFor="bankName">Bank Account Name</FormLabel>
             <Select
               labelId={"bankName"}
               id={"bankName"}
-              // value={"Bac"}
+              value={bankName}
               label={"Bank Name"}
               onChange={(e) => setBankName(e.target.value)}
               sx={{
@@ -168,8 +171,8 @@ export default function AddExpenseDialog() {
               }}
             >
               {banks.map((bank) => (
-                <MenuItem key={bank.bank_id} value={bank.bank_id}>
-                  {bank.bank_name}
+                <MenuItem key={bank.id} value={bank.id}>
+                  {bank.account_name}
                 </MenuItem>
               ))}
             </Select>
@@ -192,7 +195,7 @@ export default function AddExpenseDialog() {
             <Select
               labelId={"expenseCategory"}
               id={"expenseCategory"}
-              // value={"Bac"}
+              value={category}
               label={"Expense Category"}
               onChange={(e) => setCategory(e.target.value)}
               sx={{
