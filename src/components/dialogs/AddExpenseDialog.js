@@ -36,10 +36,8 @@ export default function AddExpenseDialog() {
   const errors = {};
 
   const isIncomeChange = (e) => {
-    setIsIncome(
-      e.target.checked ? true : false
-    );
-    console.log(isIncome.toString());
+    setIsIncome(e.target.checked)
+    console.log(!isIncome);
   };
 
   const getBanks = async () => {
@@ -54,6 +52,25 @@ export default function AddExpenseDialog() {
     console.log(data.body);
     setBanks(data.body.user);
   };
+  const updateBalance = async() => {
+    let postUrl = `${baseUrl}/bank_accounts/balance/${bankName}`;
+    axios.post(postUrl,
+    {
+      balance : amount,
+      is_expense : isIncome,
+    }
+    ,{
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }).then(res => {
+      console.log(res);
+    }).catch(err => {
+      console.log(err);
+    })
+  }
+  
   const getCategories = async () => {
     const response = await fetch(`${baseUrl}/categories/${userId}`, {
       method: "GET",
@@ -63,7 +80,6 @@ export default function AddExpenseDialog() {
       },
     });
     const data = await response.json();
-    console.log(data.body.categories);
     setCategories(data.body.categories);
   };
   const handleClickOpen = () => {
@@ -85,7 +101,7 @@ export default function AddExpenseDialog() {
           category_id: category,
           amount: amount,
           bank_account_id: bankName,
-          income: isIncome.toString(),
+          income: isIncome,
         },
         {
           headers: {
@@ -97,6 +113,7 @@ export default function AddExpenseDialog() {
       .then((res) => {
         console.log(res);
         setOpen(false);
+        updateBalance();
         //    reload page
         window.location.reload();
       })
@@ -230,7 +247,7 @@ export default function AddExpenseDialog() {
               control={
                 <Checkbox
                   checked={isIncome}
-                  onChange={isIncomeChange}
+                  onChange={(e) => setIsIncome(e.target.checked)}
                   inputProps={{ "aria-label": "controlled" }}
                 />
               }
@@ -242,7 +259,7 @@ export default function AddExpenseDialog() {
 
         <DialogActions>
           <Button onClick={handleCloseCancel}>Cancel</Button>
-          <Button onClick={handleDialogClose}>Add Account</Button>
+          <Button onClick={handleDialogClose}>Add</Button>
         </DialogActions>
       </Dialog>
     </Box>
