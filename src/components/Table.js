@@ -1,4 +1,4 @@
-import { useTable, useSortBy, useGlobalFilter,usePagination } from "react-table";
+import { useTable, useSortBy, useGlobalFilter } from "react-table";
 import React from "react";
 import {
   Table,
@@ -18,7 +18,7 @@ export default function RTable(props) {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    page,
+    rows,
     prepareRow,
     state,
     setGlobalFilter,
@@ -50,7 +50,7 @@ export default function RTable(props) {
           ))}
         </TableHead>
         <TableBody {...getTableBodyProps()}>
-          {page.map((row) => {
+          {rows.map((row) => {
             prepareRow(row);
             return (
               <TableRow {...row.getRowProps()}>

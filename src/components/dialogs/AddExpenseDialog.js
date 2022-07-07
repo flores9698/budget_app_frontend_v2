@@ -57,7 +57,7 @@ export default function AddExpenseDialog() {
     axios.post(postUrl,
     {
       balance : amount,
-      is_expense : isIncome,
+      is_expense : !isIncome,
     }
     ,{
       headers: {
